@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/ionic-material/dist/ionic.material.min.css">
+    <link rel="stylesheet" href="lib/animate.css/animate.min.css">
+    <link rel="stylesheet" href="lib/waves/dist/waves.css">
+    <link rel="stylesheet" href="lib/ion-floating-menu/dist/ion-floating-menu.min.css">
+    <link href='https://fonts.googleapis.com/css?family=RobotoDraft:400,500,700,400italic' rel='stylesheet' type='text/css'>
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="lib/ionic-material/dist/ionic.material.min.js"></script>
+    <script src="lib/ion-floating-menu/dist/ion-floating-menu.min.js"></script>
+    <script src="lib/angularfire/dist/angularfire.min.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="cordova.js"></script>
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+
+  </head>
+
+  <body ng-app="starter">
+  <ion-nav-bar class="bar-header bar-assertive">
+    <ion-nav-back-button>
+    </ion-nav-back-button>
+  </ion-nav-bar>
+  <!--
+    The views will be rendered in the <ion-nav-view> directive below
+    Templates are in the /templates folder (but you could also
+    have templates inline in this html file if you'd like).
+  -->
+  <ion-nav-view></ion-nav-view>
+
+
+
+    <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyBauFhF-qrVRaIWZ3h3kDqPtp_K8h5YR9Y",
+        authDomain: "reclami-5c6cb.firebaseapp.com",
+        databaseURL: "https://reclami-5c6cb.firebaseio.com",
+        storageBucket: "reclami-5c6cb.appspot.com",
+        messagingSenderId: "94793782076"
+      };
+      firebase.initializeApp(config);
+    </script>
+  </body>
+</html>
