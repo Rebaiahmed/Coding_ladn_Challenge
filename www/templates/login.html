@@ -1,19 +1,21 @@
-<ion-view view-title="Playlist">
-  <ion-content>
-    <h1>Ici Login page</h1>
+<ion-view view-title="أدخل">
+  <ion-content style="background: url(img/bg.jpg) center; background-size: cover;">
+    <div class="hero no-header flat">
+      <div class="content">
+        <br/>
+        <div class="app-icon">
+          <img src="img/logo.png" >
+        </div>
+      </div>
+    </div>
+    <div class="list">
+      <ion-md-input class="right-text" placeholder="أسمك" style="" highlight-color="balanced" type="email"></ion-md-input>
+      <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="energized" type="password"></ion-md-input>
+    </div>
 
-    <ion-md-input placeholder="Name" highlight-color="energized" type="text"></ion-md-input>
-    <ion-md-input placeholder="Name" highlight-color="energized" type="text"></ion-md-input>
 
-    <button class="button button-block" ng-click="login()">
-      login
-    </button>
-
-    <button class="button button-block" ng-click="Register()">
-      Regsiter
-    </button>
-
-
+      <button ui-sref="home.chkayet" class="button button-full button-positive ink">تفضل</button>
+      <button ui-sref="register" class="button button-full button-light ink">سجل روحك</button>
 
   </ion-content>
 </ion-view>

@@ -1,15 +1,44 @@
-<ion-view view-title="Playlist">
-  <ion-content>
-    <h1>Ici Register page</h1>
+<center><ion-view view-title="سجل روحك" align-title="center">
+
+  <ion-content style="background: url(img/bg.jpg) center; background-size: cover;">
+
+    <br>
+
+    <div class="app-icon"><img src="img/icone.png" height="150" width="150"></div>
+
+    <div class="list">
+
+      <form action="">
+
+        <ion-md-input class="right-text" placeholder="إسمك" highlight-color="balanced" type="text"></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="لقبك " highlight-color="energized" type="text"></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="ولايتك" highlight-color="balanced" type="text"></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="عمرك" highlight-color="energized" type="number"></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="balanced" type="password"></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="نومرو تليفونك" highlight-color="energized" type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$">></ion-md-input>
+
+        <ion-md-input class="right-text" placeholder="البريد الإلكتروني" highlight-color="energized" type="email"></ion-md-input>
 
 
-    <button class="button button-positive" modal-select ng-model="someModel" options="selectables" modal-title="Select a number">
-      Select it
-      <div class="option">
-        {{option}}
-      </div>
-    </button>
+
+
+
+      </form>
+
+    </div>
+
+
+
+      <button ui-sref="app.profile" class="button button-full button-assertive ink">سجل</button>
+    <button ui-sref="login" class="button button-full button-positive ink">Arja3</button>
+
 
   </ion-content>
-</ion-view>
+
+</ion-view></center>
 
