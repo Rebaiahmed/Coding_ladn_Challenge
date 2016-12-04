@@ -37,7 +37,7 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
     .state('register', {
           url: '/Register',
       templateUrl: 'templates/Register.html',
-      controller: 'RegisterCtrl'
+      controller: 'loginCtrl'
     })
 
     .state('home', {
@@ -50,39 +50,80 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
     .state('home.chkayet', {
       url: '/chkayet',
-      controller: 'HomeCtrl',
-      templateUrl: 'templates/chkayet.html',
+      views: {
+        'snd': {
+          templateUrl: 'templates/chkayet.html',
+          controller: 'HomeCtrl'
+        }
+      }
+
+
 
     })
 
     .state('home.dalilek', {
       url: '/dliled',
-      controller: 'daliledCtrl',
-      templateUrl: 'templates/dalilek.html',
+      views: {
+        'snd': {
+          controller: 'dalilekCtrl',
+          templateUrl: 'templates/dalilek.html',
+        }
+      }
+
 
     })
 
     .state('home.profilek', {
       url: '/profilek',
-      controller: 'ProfilekCtrl',
-      templateUrl: 'templates/profilek.html',
+      views: {
+        'snd': {
+          controller: 'ProfilekCtrl',
+          templateUrl: 'templates/profilek.html',
+        }
+      }
+
 
     })
 
 
     .state('home.nouweb', {
       url: '/Nouweb',
-      controller: 'NouwebCtrl',
-      templateUrl: 'templates/nouweb.html',
+      views: {
+        'snd': {
+          controller: 'NouwebCtrl',
+          templateUrl: 'templates/nouweb.html',
+        }
+      }
+
 
     })
 
     .state('home.creerReclamation', {
       url: '/Reclamation',
-      controller: 'ReclamationCtrl',
-      templateUrl: 'templates/Creer_Reclamation.html',
+      views: {
+        'snd': {
+          controller: 'ReclamationCtrl',
+          templateUrl: 'templates/Creer_Reclamation.html',
+        }
+      }
+
+
 
     })
+
+    .state('home.contactUs', {
+      url: '/ContactUs',
+      views: {
+        'snd': {
+          controller: 'ContactCtrl',
+          templateUrl: 'templates/ContactUs.html',
+        }
+      }
+
+
+
+    })
+
 
 
 
@@ -160,7 +201,17 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
       if(user) {
         return JSON.parse(user);
       }
-    }
+    },
+
+
+      CreateReclamation : function(reclamation){
+
+        var ref = firebase.database().ref().child("Reclamations");
+        // create a synchronized array
+        $scope.reclamations = $firebaseArray(ref);
+        $scope.reclamations.$add(reclamation);
+
+      }
 
     };
 
@@ -174,36 +225,90 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
   .controller('HomeCtrl', function($scope, $ionicModal, $timeout) {
 
-
+console.log('we are here !!!!!');
   })
 
 
-.controller('loginCtrl', function($scope, $stateParams,Auth) {
+.controller('loginCtrl', function($scope, $stateParams,Auth,$state) {
     console.log('hamodlha login');
 
     $scope.User = {};
 
+console.log('the auth', Auth);
 
-    $scope.login = function()
+    $scope.submitted = false ;
+
+
+
+
+
+    $scope.login = function(isvalid)
     {
-      Auth.$authWithPassword({
-        email: $scope.email,
-        password: $scope.password
-      })
-        .then(function(authData) {
-          console.log('Logged in as:', authData.uid);
-          //$state.go('profile');
+
+
+      $scope.submitted = true ;
+
+
+      //if(isvalid)
+      //{
+        /*Auth.$signInWithEmailAndPassword({
+          email: $scope.User.email,
+          password: $scope.User.password
         })
-        .catch(function(err) {
-          console.log('error:',err);
-          //$state.go('login');
-        });
+          .then(function(authData) {
+            console.log('Logged in as:', authData.uid);
+            //$state.go('profile');
+            $state.go('home.chkayet')
+          })
+          .catch(function(err) {
+            console.log('error:',err);
+            $scope.shwoError = true;
+            //$state.go('login');
+          });*/
+      $state.go('home.chkayet');
+      //}
+
 
     }
 
+
+
+
+
+
+    //******************************************************//
+$scope.newUser = {};
+    $scope.showErrorRegister = false ;
+    $scope.submitted2 = false ;
+
+    $scope.Register = function(isValid){
+      //create a New User
+      $scope.submitted2 = true ;
+
+      if(isValid) {
+
+        Auth.$createUserWithEmailAndPassword({
+          username: $scope.newUser.username,
+          email: $scope.newUser.email,
+          password: $scope.newUser.password
+        })
+          .then(function (userDate) {
+            //call the login method
+
+            $scope.login($scope.newUser.email, $scope.newUser.password);
+
+          }).catch(function (err) {
+            $scope.error = err;
+          })
+      }//end if isvalid
+    }
+
+
+
+
+
 })
-  .controller('RegisterCtrl', function($scope, $stateParams) {
-})
+
 //ProfilekCtrl
   .controller('ProfilekCtrl', function($scope, $stateParams) {
   })
@@ -212,3 +317,20 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
   .controller('NouwebCtrl', function($scope, $stateParams) {
   })
+
+  .controller('ContactCtrl', function($scope, $stateParams) {
+  })
+
+
+  .controller('dalilekCtrl', function($scope, $stateParams) {
+  })
+
+  .run(["$rootScope", "$state", function($rootScope, $state) {
+    $rootScope.$on("$stateChangeError", function(event, toState, toParams, fromState, fromParams, error) {
+      // We can catch the error thrown when the $requireSignIn promise is rejected
+      // and redirect the user back to the home page
+      if (error === "AUTH_REQUIRED") {
+        $state.go("login");
+      }
+    });
+  }]);
