@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebase','ionMdInput'])
+angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebase','ionMdInput','ionic-modal-select'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -231,6 +231,19 @@ console.log('we are here !!!!!');
 
 .controller('loginCtrl', function($scope, $stateParams,Auth,$state) {
     console.log('hamodlha login');
+
+
+
+    //les donneé pour les gouvernorat **********************//
+
+    $scope.selectables = [
+      { name: "Tunis"},
+      { name: "Bizerte"},
+
+    ];
+
+
+
 
     $scope.User = {};
 
