@@ -6,23 +6,23 @@
 
     <div class="app-icon"><img src="img/icone.png" height="150" width="150"></div>
 
-    <div class="list">
+    <div class="list" class="padding">
 
       <form action="">
 
-        <ion-md-input class="right-text" placeholder="إسمك" highlight-color="balanced" type="text"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="إسمك" highlight-color="balanced" type="text" ng-model="newUser.nom"></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="لقبك " highlight-color="energized" type="text"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="لقبك " highlight-color="energized" type="text" ng-model="newUser.prenom"></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="ولايتك" highlight-color="balanced" type="text"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="ولايتك" highlight-color="balanced" type="text" ng-model="newUser.gouvernorat"></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="عمرك" highlight-color="energized" type="number"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="عمرك" highlight-color="energized" type="number" ng-model="newUser.age"></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="balanced" type="password"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="balanced" type="password" ng-model="newUser.password"></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="نومرو تليفونك" highlight-color="energized" type="tel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$">></ion-md-input>
+        <ion-md-input class="right-text" placeholder="نومرو تليفونك" highlight-color="energized" type="tel" ng-model="newUser.numtel" pattern="^((\+\d{1,3}(-| )?\(?\d\)?(-| )?\d{1,5})|(\(?\d{2,6}\)?))(-| )?(\d{3,4})(-| )?(\d{4})(( x| ext)\d{1,5}){0,1}$">></ion-md-input>
 
-        <ion-md-input class="right-text" placeholder="البريد الإلكتروني" highlight-color="energized" type="email"></ion-md-input>
+        <ion-md-input class="right-text" placeholder="البريد الإلكتروني" highlight-color="energized" type="email" ng-model="newUser.email"></ion-md-input>
 
 
 
@@ -34,7 +34,7 @@
 
 
 
-      <button ui-sref="app.profile" class="button button-full button-assertive ink">سجل</button>
+      <button ng-click="Register()" class="button button-full button-assertive ink">سجل</button>
     <button ui-sref="login" class="button button-full button-positive ink">Arja3</button>
 
 

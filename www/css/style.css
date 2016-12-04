@@ -9,3 +9,15 @@
   text-align: right !important;
   direction: rtl !important;
 }
+
+.error {
+  font-family: 'Roboto, sans-serif', Roboto, sans-serif;
+  color: #B71C1C;
+  font-weight: 700;
+  text-align: center;
+  margin: auto
+}
+
+.cardError {
+  background-color: #EF9A9A
+}

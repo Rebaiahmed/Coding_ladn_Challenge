@@ -1,22 +1,32 @@
 <ion-view view-title="أدخل">
   <ion-content style="background: url(img/bg.jpg) center; background-size: cover;">
+    <div class="padding">
     <div class="hero no-header flat">
       <div class="content">
-        <br/>
         <div class="app-icon">
           <img src="img/logo.png" >
         </div>
       </div>
     </div>
+      <form name="loginForm" novalidate ng-submit="login()">
     <div class="list">
-      <ion-md-input class="right-text" placeholder="أسمك" style="" highlight-color="balanced" type="email"></ion-md-input>
-      <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="energized" type="password"></ion-md-input>
+
+      <ion-md-input class="right-text" placeholder="أسمك" style="" highlight-color="balanced" type="email" ng-model="User.email"
+                    name ="email" required="true"></ion-md-input>
+      <ion-md-input class="right-text" placeholder="كلمة السر" highlight-color="energized"
+                    type="password" ng-model="User.password" required="true" name="password"></ion-md-input>
+
     </div>
 
 
-      <button ui-sref="home.chkayet" class="button button-full button-positive ink">تفضل</button>
-      <button ui-sref="home.chkayet" class="button button-full button-light ink">سجل روحك</button>
+      <button class="button button-full button-positive  ink">تفضل</button>
+      <button ui-sref="register" class="button button-full button-positive ink">سجل روحك</button>
 
+      </form>
+
+
+
+    </div>
   </ion-content>
 </ion-view>
 

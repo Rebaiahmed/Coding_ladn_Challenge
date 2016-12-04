@@ -192,12 +192,12 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
     },
 
      getUserData : function(user) {
-      var ref = new Firebase("https://statusapp.firebaseio.com/users/" + user);
+      var ref = new Firebase("reclami-5c6cb.firebaseapp.com/users/" + user);
       return $firebaseObject(ref);
     },
 
     getLoggedInUser : function() {
-      var user = localStorage.getItem('firebase:session::statusapp');
+      var user = localStorage.getItem('firebase:session::reclami-5c6cb');
       if(user) {
         return JSON.parse(user);
       }
@@ -209,7 +209,7 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
         var ref = firebase.database().ref().child("Reclamations");
         // create a synchronized array
         $scope.reclamations = $firebaseArray(ref);
-        $scope.reclamations.$add(reclamation);
+        return $scope.reclamations.$add(reclamation);
 
       }
 
@@ -223,13 +223,47 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
   }])
 
-  .controller('HomeCtrl', function($scope, $ionicModal, $timeout) {
+  .controller('HomeCtrl', function($scope, $ionicModal, $timeout,UserService,$ionicLoading) {
 
-console.log('we are here !!!!!');
+
+    $ionicLoading.show({
+      template: '<ion-spinner icon="dots"></ion-spinner>',
+      hideOnStageChange: true,
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0,
+    });
+    $timeout(function(){
+      $ionicLoading.hide();
+    },2000)
+
+
+console.log('we are here !!!!! we must get the current User',UserService.getLoggedInUser());
+
+
+
+
+    //on doit faire une requete au préocureur qui
+
+    $scope.Reclamation = {}
+    //fonction CReer Reclmation
+    $scope.CreateReclamation = function()
+    {
+      UserService.CreateReclamation($scope.Reclamation)
+        .then(function(data)
+      {
+        console.log('data are', data);
+        //lancer ionicPopup
+      }).catch(function(err){
+        console.log('err',err);
+      })
+
+    }
   })
 
 
-.controller('loginCtrl', function($scope, $stateParams,Auth,$state) {
+.controller('loginCtrl', function($scope, $stateParams,Auth,$state,$ionicLoading,$timeout) {
     console.log('hamodlha login');
 
 
@@ -253,33 +287,91 @@ console.log('the auth', Auth);
 
 
 
+    Auth.$createUserWithEmailAndPassword({
+      "email": "foo@bar.com",   // The email corresponding to the authenticated user
+      "email_verified": false,  // Whether or not the above email is verified
+      "exp": 1465366314,        // JWT expiration time
+      "iat": 1465279914,        // JWT issued-at time
+      "sub": "g8u5h1i3t51b5",   // JWT subject (same as auth.uid)
+      "auth_time": 1465279914,  // When the original authentication took place
+      "firebase": {             // Firebase-namespaced claims
+        "identities": {         // Authentication identities
+          "github.com": [       // Provider
+            "8513515"           // ID of the user on the above provider
+          ]
+        }
+      }
+    })
+      .then(function(authData) {
+        console.log('Logged in as:', authData.uid);
+
+        $state.go('home.chkayet')
+      })
+      .catch(function(err) {
+        console.log('error:',err);
+        $scope.shwoError = true;
+        //$state.go('login');
+      });
 
 
-    $scope.login = function(isvalid)
+
+
+
+
+
+
+
+    $scope.login = function()
     {
 
 
+
       $scope.submitted = true ;
+      $ionicLoading.show({
+        template: '<ion-spinner icon="dots"></ion-spinner>',
+        hideOnStageChange: true,
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0,
+      });
+      $timeout(function(){
+        $ionicLoading.hide();
+      },2000)
 
+//console.log('User', JSON.stringify($scope.User));
+      //var email = $scope.User.email;
+      //console.log('email is ', email);
+      var user = {email: 'ahmed@mail.com',
+        password: "ahmed"}
 
-      //if(isvalid)
-      //{
-        /*Auth.$signInWithEmailAndPassword({
-          email: $scope.User.email,
-          password: $scope.User.password
+        Auth.$createUserWithEmailAndPassword({
+          "email": "foo@bar.com",   // The email corresponding to the authenticated user
+          "email_verified": false,  // Whether or not the above email is verified
+          "exp": 1465366314,        // JWT expiration time
+          "iat": 1465279914,        // JWT issued-at time
+          "sub": "g8u5h1i3t51b5",   // JWT subject (same as auth.uid)
+          "auth_time": 1465279914,  // When the original authentication took place
+          "firebase": {             // Firebase-namespaced claims
+            "identities": {         // Authentication identities
+              "github.com": [       // Provider
+                "8513515"           // ID of the user on the above provider
+              ]
+            }
+          }
         })
           .then(function(authData) {
             console.log('Logged in as:', authData.uid);
-            //$state.go('profile');
+
             $state.go('home.chkayet')
           })
           .catch(function(err) {
             console.log('error:',err);
             $scope.shwoError = true;
             //$state.go('login');
-          });*/
-      $state.go('home.chkayet');
-      //}
+          });
+
+
 
 
     }
@@ -294,26 +386,59 @@ $scope.newUser = {};
     $scope.showErrorRegister = false ;
     $scope.submitted2 = false ;
 
-    $scope.Register = function(isValid){
+
+
+
+
+    $scope.Register = function(){
       //create a New User
       $scope.submitted2 = true ;
 
-      if(isValid) {
+      $ionicLoading.show({
+        template: '<ion-spinner icon="dots"></ion-spinner>',
+        hideOnStageChange: true,
+        animation: 'fade-in',
+        showBackdrop: true,
+        maxWidth: 200,
+        showDelay: 0,
+      });
+      $timeout(function(){
+        $ionicLoading.hide();
+      },2000)
+
+
+var obj = {name : "ahmed", email :"ahmed@mail.com"}
+
+
+
+
+
+
+
+
+
+
 
         Auth.$createUserWithEmailAndPassword({
-          username: $scope.newUser.username,
-          email: $scope.newUser.email,
-          password: $scope.newUser.password
+          nom : "ahmed",
+          //nom: $scope.newUser.nom ,
+          //prenom :$scope.newUser.prenom,
+          //gouvernorat : $scope.newUser.gouvernorat,
+          //age : $scope.newUser.age,
+          //numTel :$scope.newUser.numtel,
+          //email: $scope.newUser.email,
+          //email :"ahmed@mail.com",
+          //password: $scope.newUser.password
         })
           .then(function (userDate) {
             //call the login method
-
+          console.log('userData is', userDate);
             $scope.login($scope.newUser.email, $scope.newUser.password);
 
           }).catch(function (err) {
+            console.log('err', err);
             $scope.error = err;
           })
-      }//end if isvalid
     }
 
 
