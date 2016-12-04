@@ -4,7 +4,7 @@
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebase'])
+angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebase','ionMdInput'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -98,7 +98,7 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
 
     // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/home/chkayet');
+  $urlRouterProvider.otherwise('/login');
 })
   .constant('FURL', {
     apiKey: "AIzaSyBauFhF-qrVRaIWZ3h3kDqPtp_K8h5YR9Y",
@@ -129,13 +129,13 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
     var Users = {
 
 
-      getUserByuid : function(uid){
+      /*getUserByuid : function(uid){
         /*var users = $firebaseArray(ref);
 
          console.log('result1', users.$indexFor("ahmed.bouhmid94@gmail.com"))
          console.log('user1 ',users.$getRecord("Ahmed Rebai"));*/
 
-        users.$loaded().then(function(users) {
+        /*users.$loaded().then(function(users) {
           console.log('users are', JSON.stringify(users));
           console.log('user ',users.$getRecord(uid));
           return users.$getRecord(uid);
@@ -143,7 +143,24 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
         return users.$getRecord(uid);
 
+      }*/
+
+       newUserRef : function(user) {
+      var ref = new Firebase("https://statusapp.firebaseio.com/users/" + user.uid);
+      return $firebaseObject(ref);
+    },
+
+     getUserData : function(user) {
+      var ref = new Firebase("https://statusapp.firebaseio.com/users/" + user);
+      return $firebaseObject(ref);
+    },
+
+    getLoggedInUser : function() {
+      var user = localStorage.getItem('firebase:session::statusapp');
+      if(user) {
+        return JSON.parse(user);
       }
+    }
 
     };
 
@@ -157,49 +174,33 @@ angular.module('starter', ['ionic','ionic-material','ion-floating-menu','firebas
 
   .controller('HomeCtrl', function($scope, $ionicModal, $timeout) {
 
-    // With the new view caching in Ionic, Controllers are only called
-    // when they are recreated or on app start, instead of every page change.
-    // To listen for when this page is active (for example, to refresh data),
-    // listen for the $ionicView.enter event:
-    //$scope.$on('$ionicView.enter', function(e) {
-    //});
-    console.log('we are here hey niggah my niggah !');
 
-    // Form data for the login modal
-    $scope.loginData = {};
-
-    // Create the login modal that we will use later
-    $ionicModal.fromTemplateUrl('templates/login.html', {
-      scope: $scope
-    }).then(function(modal) {
-      $scope.modal = modal;
-    });
-
-    // Triggered in the login modal to close it
-    $scope.closeLogin = function() {
-      $scope.modal.hide();
-    };
-
-    // Open the login modal
-    $scope.login = function() {
-      $scope.modal.show();
-    };
-
-    // Perform the login action when the user submits the login form
-    $scope.doLogin = function() {
-      console.log('Doing login', $scope.loginData);
-
-      // Simulate a login delay. Remove this and replace with your login
-      // code if using a login system
-      $timeout(function() {
-        $scope.closeLogin();
-      }, 1000);
-    };
   })
 
 
-.controller('loginCtrl', function($scope, $stateParams) {
+.controller('loginCtrl', function($scope, $stateParams,Auth) {
     console.log('hamodlha login');
+
+    $scope.User = {};
+
+
+    $scope.login = function()
+    {
+      Auth.$authWithPassword({
+        email: $scope.email,
+        password: $scope.password
+      })
+        .then(function(authData) {
+          console.log('Logged in as:', authData.uid);
+          //$state.go('profile');
+        })
+        .catch(function(err) {
+          console.log('error:',err);
+          //$state.go('login');
+        });
+
+    }
+
 })
   .controller('RegisterCtrl', function($scope, $stateParams) {
 })
